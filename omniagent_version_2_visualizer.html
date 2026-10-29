@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OmniAgent by Tatwa Technologies — AI-First Interactive Showcase (v2)</title>
+    
+    <!-- Tailwind CSS with Typography Plugin -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    
+    <!-- Google Fonts: Plus Jakarta Sans, Outfit & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Optional Anam Agent Web Component Embed Script -->
+    <script src="https://unpkg.com/@anam-ai/agent-widget" async></script>
+
+    <style>
+        :root {
+            --omni-blue: #1e6bff;
+            --omni-royal: #1734d8;
+            --tatwa-red: #e11d48;
+        }
+
+        /* Full container fit for the native Video Agent embed */
+        anam-agent {
+            width: 100% !important;
+            height: 100% !important;
+            display: block;
+        }
+
+        * {
+            box-sizing: border-box;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        *::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+            background-color: #030611;
+        }
+
+        .font-display {
+            font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* High-Tech Grid Pattern */
+        .omni-grid-pattern {
+            background-color: #030611;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(30, 107, 255, 0.12) 0%, transparent 60%),
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 32px 32px, 32px 32px;
+        }
+
+        /* Smooth slide animation in Right Panel */
+        .slide-panel {
+            transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1), transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+
+        .slide-panel.active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+            display: flex;
+        }
+
+        .slide-panel.inactive {
+            opacity: 0;
+            transform: scale(0.98) translateY(6px);
+            pointer-events: none;
+            display: none;
+        }
+
+        /* Lavender-Framed UI Cards */
+        .omni-card-frame {
+            background: #e2dcfa;
+            border-radius: 14px;
+            padding: 8px;
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+        }
+
+        .omni-card-inner {
+            background: #ffffff;
+            color: #0f172a;
+            border-radius: 10px;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Realtime Audio Equalizer Animation */
+        @keyframes eqPulse {
+            0%, 100% { transform: scaleY(0.3); opacity: 0.7; }
+            50% { transform: scaleY(1); opacity: 1; }
+        }
+
+        .eq-bar {
+            width: 3px;
+            background: #1e6bff;
+            border-radius: 999px;
+            transform-origin: center;
+            animation: eqPulse 1.2s ease-in-out infinite;
+        }
+
+        /* Video Agent Pulse Waves */
+        @keyframes agentPulse {
+            0% { transform: scale(0.96); opacity: 0.5; }
+            50% { transform: scale(1.06); opacity: 0.2; }
+            100% { transform: scale(0.96); opacity: 0.5; }
+        }
+        .agent-ring {
+            animation: agentPulse 3s ease-in-out infinite;
+        }
+
+        /* Side Menu Slide Drawer Animation */
+        #side-menu-drawer {
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #side-menu-drawer.drawer-open {
+            transform: translateX(0);
+        }
+        #side-menu-drawer.drawer-closed {
+            transform: translateX(100%);
+        }
+    </style>
+</head>
+<body class="bg-[#030611] text-gray-100 h-screen w-screen overflow-hidden flex flex-col omni-grid-pattern select-none">
+
+    <!-- =================================================================
+         CLEAN & PRESENTABLE TOP HEADER
+         ================================================================= -->
+    <header class="h-14 border-b border-white/10 bg-[#040816]/90 backdrop-blur-md px-4 sm:px-6 flex items-center justify-between shrink-0 z-30">
+        
+        <!-- Left: Clean Brand Identity -->
+        <div class="flex items-center gap-3 cursor-pointer" onclick="window.goToSlide(0)">
+            <svg class="w-7 h-7 text-white shrink-0 drop-shadow-[0_0_8px_rgba(30,107,255,0.8)]" viewBox="0 0 100 100" fill="currentColor">
+                <g transform="translate(50,50)">
+                    <ellipse cx="0" cy="-32" rx="7" ry="13" transform="rotate(25 0 -32)" />
+                    <ellipse cx="0" cy="-32" rx="7" ry="13" transform="rotate(36) rotate(25 0 -32)" />
+                    <ellipse cx="0" cy="-32" rx="7" ry="13" transform="rotate(72) rotate(25 0 -32)" />
+                    <ellipse cx="0" cy="-32" rx="7" ry="13" transform="rotate(108) rotate(25 0 -32)" />
+                    <ellipse cx="0" cy="-32" rx="7" ry="13" transform="rotate(144) rotate(25 0 -32)" />
+                    <ellipse cx="0" cy="-32" rx="7" ry="13" transform="rotate(180) rotate(25 0 -32)" />
+                    <ellipse cx="0" cy="-32" rx="7" ry="13" transform="rotate(216) rotate(25 0 -32)" />
+                    <ellipse cx="0" cy="-32" rx="7" ry="13" transform="rotate(252) rotate(25 0 -32)" />
+                    <ellipse cx="0" cy="-32" rx="7" ry="13" transform="rotate(288) rotate(25 0 -32)" />
+                    <ellipse cx="0" cy="-32" rx="7" ry="13" transform="rotate(324) rotate(25 0 -32)" />
+                </g>
+            </svg>
+            <div class="leading-none flex items-center gap-2">
+                <span class="font-display font-extrabold text-base tracking-tight text-white">OmniAgent</span>
+                <span class="text-[10px] font-mono text-blue-400 bg-blue-500/10 border border-blue-500/30 px-1.5 py-0.5 rounded font-bold">TATWA 2.0</span>
+            </div>
+        </div>
+
+        <!-- Center: Clean Presentational Tagline -->
+        <div class="hidden md:flex items-center gap-2 text-xs text-slate-400 font-medium">
+            <span>AI Voice &amp; Omni-Channel Platform</span>
+            <span class="text-slate-600">•</span>
+            <span class="text-blue-400 font-mono text-[11px]">Enterprise Interactive Showcase</span>
+        </div>
+
+        <!-- Right: Status Pill & Menu Button -->
+        <div class="flex items-center gap-3">
+            <div id="session-status" class="px-2.5 py-1 rounded-full bg-emerald-950/60 border border-emerald-800/60 text-xs font-medium flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="text-emerald-300 font-mono text-[11px]">Ready</span>
+            </div>
+
+            <button 
+                id="btn-open-menu" 
+                onclick="window.toggleSideMenu(true)" 
+                class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 active:bg-white/15 border border-white/15 text-white text-xs font-medium transition flex items-center gap-2 shadow-sm"
+                title="Open Controls &amp; Settings Menu"
+            >
+                <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+                </svg>
+                <span>Menu</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- =================================================================
+         MAIN SPLIT LAYOUT (VERSION 2 ARCHITECTURE):
+         54% LEFT (VIDEO AGENT SLOT) | 46% RIGHT (FULL VERTICAL SPACE SHOWCASE)
+         ================================================================= -->
+    <main class="flex-1 flex flex-col md:flex-row overflow-hidden relative min-h-0 w-full h-full">
+
+        <!-- =============================================================
+             LEFT PANEL: CLEAN VIDEO AGENT VIEWPORT
+             ============================================================= -->
+        <section class="relative w-full md:w-[54%] h-1/2 md:h-full bg-black flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-white/10 overflow-hidden">
+            
+            <div id="omniagent-video-dock" class="w-full h-full relative flex items-center justify-center bg-gradient-to-b from-[#030612] via-[#050a1b] to-black overflow-hidden">
+                <video id="omniagent-video-element" class="absolute inset-0 w-full h-full object-cover hidden z-10" autoplay playsinline></video>
+                <audio id="omniagent-audio-element" class="hidden" autoplay></audio>
+
+                <anam-agent id="omniagent-agent" api-base-url="https://lab.anam.ai" layout="inline" class="hidden"></anam-agent>
+
+                <div id="video-agent-standby" class="flex flex-col items-center justify-center text-center p-6 z-10 select-none max-w-sm">
+                    <div class="relative w-28 h-28 sm:w-36 sm:h-36 flex items-center justify-center mb-4">
+                        <div class="absolute inset-0 rounded-full border border-blue-500/40 agent-ring"></div>
+                        <div class="absolute inset-2 rounded-full border border-blue-400/20 agent-ring" style="animation-delay: 1.5s;"></div>
+                        <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-tr from-[#08132e] via-[#0e214d] to-[#1e6bff]/30 border border-blue-500/50 flex items-center justify-center shadow-xl shadow-blue-600/30">
+                            <svg class="w-10 h-10 sm:w-12 sm:h-12 text-white drop-shadow-[0_0_10px_rgba(30,107,255,0.9)]" viewBox="0 0 100 100" fill="currentColor">
+                                <g transform="translate(50,50)">
+                                    <ellipse cx="0" cy="-33" rx="7.5" ry="14" transform="rotate(28 0 -33)" />
+                                    <ellipse cx="0" cy="-33" rx="7.5" ry="14" transform="rotate(36) rotate(28 0 -33)" />
+                                    <ellipse cx="0" cy="-33" rx="7.5" ry="14" transform="rotate(72) rotate(28 0 -33)" />
+                                    <ellipse cx="0" cy="-33" rx="7.5" ry="14" transform="rotate(108) rotate(28 0 -33)" />
+                                    <ellipse cx="0" cy="-33" rx="7.5" ry="14" transform="rotate(144) rotate(28 0 -33)" />
+                                    <ellipse cx="0" cy="-33" rx="7.5" ry="14" transform="rotate(180) rotate(28 0 -33)" />
+                                    <ellipse cx="0" cy="-33" rx="7.5" ry="14" transform="rotate(216) rotate(28 0 -33)" />
+                                    <ellipse cx="0" cy="-33" rx="7.5" ry="14" transform="rotate(252) rotate(28 0 -33)" />
+                                    <ellipse cx="0" cy="-33" rx="7.5" ry="14" transform="rotate(288) rotate(28 0 -33)" />
+                                    <ellipse cx="0" cy="-33" rx="7.5" ry="14" transform="rotate(324) rotate(28 0 -33)" />
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <h2 class="font-display font-bold text-lg sm:text-xl text-white tracking-tight mb-1">
+                        OmniAgent Specialist
+                    </h2>
+                    <p class="text-xs text-slate-300 leading-relaxed font-normal">
+                        Ready for AI Video Agent stream binding &amp; synchronous client tool calls.
+                    </p>
+                </div>
+
+                <div class="pointer-events-none absolute -bottom-16 left-1/2 -translate-x-1/2 w-3/4 h-52 bg-blue-600/15 rounded-full blur-3xl"></div>
+            </div>
+
+            <div class="absolute top-3.5 left-3.5 z-20 flex items-center gap-2 pointer-events-none">
+                <div class="px-2.5 py-1 rounded-lg bg-gray-950/80 backdrop-blur-md border border-white/10 text-xs font-medium text-gray-200 flex items-center gap-2 shadow-lg">
+                    <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                    <span class="font-semibold text-white">OmniAgent</span>
+                    <span class="text-slate-400 text-[10px]">• Solutions Architect</span>
+                </div>
+            </div>
+
+            <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 px-3 py-1.5 bg-gray-900/90 backdrop-blur-xl border border-gray-700/70 rounded-full shadow-2xl">
+                <button id="btn-mute" onclick="window.toggleMicMute()" class="p-1.5 rounded-full hover:bg-gray-800 text-gray-200 hover:text-white transition active:scale-95 flex items-center gap-1.5 text-xs font-medium" title="Mute Microphone">
+                    <svg id="icon-mic-on" class="w-3.5 h-3.5 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
+                    <svg id="icon-mic-off" class="w-3.5 h-3.5 text-red-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4l16 16"></path></svg>
+                    <span id="label-mute">Mute</span>
+                </button>
+
+                <div class="h-3 w-px bg-gray-700"></div>
+
+                <button id="btn-toggle-transcript" onclick="window.toggleTranscript()" class="flex items-center gap-1 px-2.5 py-1 rounded-full bg-blue-600/20 text-blue-400 border border-blue-500/30 hover:bg-blue-600 hover:text-white transition active:scale-95 text-xs font-medium">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+                    <span id="label-transcript">Transcript</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- =============================================================
+             RIGHT PANEL: FULL-HEIGHT OPTIMIZED VISUALIZER SHOWCASE
+             ============================================================= -->
+        <section class="relative w-full md:w-[46%] h-1/2 md:h-full bg-[#050814] flex flex-col overflow-hidden min-h-0">
+            
+            <!-- MAIN VIEWPORT CONTAINER: ZERO SCROLLBAR, OPTIMIZED FOR FULL SPACE -->
+            <div id="panel-elements-showcase" class="absolute inset-0 flex flex-col p-3 sm:p-4 overflow-hidden">
+                
+                <!-- TOP HEADER -->
+                <div class="shrink-0 flex items-center justify-between pb-2 mb-2 border-b border-white/10 gap-2">
+                    <div class="flex items-center gap-2 min-w-0">
+                        <span id="slide-pill-counter" class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-[#1e6bff] text-white shrink-0">
+                            01 / 13
+                        </span>
+                        <h3 id="slide-header-title" class="font-display font-semibold text-xs sm:text-sm text-white truncate">
+                            Enterprise AI Voice Agents
+                        </h3>
+                    </div>
+
+                    <div class="flex items-center gap-1 shrink-0">
+                        <button id="btn-prev-slide" class="p-1 px-2.5 rounded-md bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition text-xs flex items-center gap-1" title="Previous Slide (Arrow Left)">
+                            <span>←</span>
+                        </button>
+                        <button id="btn-next-slide" class="p-1 px-2.5 rounded-md bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition text-xs flex items-center gap-1" title="Next Slide (Arrow Right)">
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CARDS VIEWPORT CONTAINER: Takes 100% of available height -->
+                <div id="slide-container" class="flex-1 min-h-0 relative w-full h-full overflow-hidden flex flex-col">
+                    
+                    <!-- =====================================================
+                         SLIDE 0: HERO OVERVIEW (Full Height Coverage)
+                         ===================================================== -->
+                    <div id="slide-0" data-screen-id="hero_overview" class="slide-panel active w-full h-full flex flex-col justify-between p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#060c1c] via-[#09142c] to-[#030612] border border-blue-900/40 overflow-hidden relative shadow-2xl">
+                        <div class="absolute -top-24 -right-24 w-72 h-72 bg-blue-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+                        <div class="shrink-0 flex items-center justify-between relative z-10 border-b border-white/10 pb-2">
+                            <span class="text-xs font-bold text-white uppercase tracking-wider">AI Voice &amp; Chat Platform</span>
+                            <span class="text-[10px] font-mono text-blue-400 px-2.5 py-0.5 rounded-full bg-blue-950/70 border border-blue-800/50">TATWA 2.0</span>
+                        </div>
+
+                        <!-- Content Vertically Proportioned -->
+                        <div class="flex-1 min-h-0 flex flex-col justify-evenly relative z-10 py-3 text-center items-center">
+                            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-blue-600/20 border border-blue-500/40 flex items-center justify-center text-blue-400 shadow-xl shadow-blue-500/25">
+                                <svg class="w-8 h-8 text-white" viewBox="0 0 100 100" fill="currentColor">
+                                    <g transform="translate(50,50)">
+                                        <ellipse cx="0" cy="-33" rx="7.5" ry="14" transform="rotate(28 0 -33)" />
+                                        <ellipse cx="0" cy="-33" rx="7.5" ry="14" transform="rotate(72) rotate(28 0 -33)" />
+                                        <ellipse cx="0" cy="-33" rx="7.5" ry="14" transform="rotate(144) rotate(28 0 -33)" />
+                                        <ellipse cx="0" cy="-33" rx="7.5" ry="14" transform="rotate(216) rotate(28 0 -33)" />
+                                        <ellipse cx="0" cy="-33" rx="7.5" ry="14" transform="rotate(288) rotate(28 0 -33)" />
+                                    </g>
+                                </svg>
+                            </div>
+
+                            <div>
+                                <p class="text-[10px] font-mono tracking-[0.25em] text-blue-400 uppercase mb-1">TATWA TECHNOLOGIES</p>
+                                <h1 class="font-display font-bold text-2xl sm:text-3xl text-white leading-tight">
+                                    Build Enterprise Grade<br/>
+                                    <span class="text-[#1e6bff] font-extrabold">AI Voice Agents</span> for every<br/>
+                                    customer conversation
+                                </h1>
+                            </div>
+
+                            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-md font-normal">
+                                Autonomous AI Agents that make calls, communicate via email or chat and execute complex workflows in multiple Indian &amp; global languages.
+                            </p>
+
+                            <div class="flex items-center justify-center gap-2 pt-1 flex-wrap">
+                                <span class="px-3 py-1 rounded-full bg-blue-950/70 border border-blue-800/50 text-xs text-blue-300 font-medium">17+ Languages</span>
+                                <span class="px-3 py-1 rounded-full bg-blue-950/70 border border-blue-800/50 text-xs text-blue-300 font-medium">Omnichannel Sync</span>
+                                <span class="px-3 py-1 rounded-full bg-blue-950/70 border border-blue-800/50 text-xs text-blue-300 font-medium">&lt;450ms Latency</span>
+                            </div>
+                        </div>
+
+                        <!-- Sine Wave Ribbon -->
+                        <div class="h-20 w-full relative shrink-0 overflow-hidden rounded-b-xl -mb-5 -mx-5 px-5 pointer-events-none">
+                            <svg class="w-full h-full" viewBox="0 0 1000 200" preserveAspectRatio="none">
+                                <defs>
+                                    <linearGradient id="waveG1" x1="0" y1="0" x2="1" y2="0">
+                                        <stop offset="0%" stop-color="#0b1d51" stop-opacity="0.3" />
+                                        <stop offset="30%" stop-color="#1e6bff" stop-opacity="0.85" />
+                                        <stop offset="70%" stop-color="#2563eb" stop-opacity="0.9" />
+                                        <stop offset="100%" stop-color="#60a5fa" stop-opacity="0.6" />
+                                    </linearGradient>
+                                </defs>
+                                <path fill="url(#waveG1)" d="M0,100 C200,40 400,160 600,130 C800,100 900,50 1000,80 L1000,200 L0,200 Z"></path>
+                                <path fill="none" stroke="#ffffff" stroke-width="2.5" opacity="0.9" d="M0,140 C200,90 400,165 600,160 C800,150 900,90 1000,100" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- =====================================================
+                         SLIDE 1: OMNICHANNEL MATRIX (Full Height Coverage)
+                         ===================================================== -->
+                    <div id="slide-1" data-screen-id="omnichannel_matrix" class="slide-panel inactive w-full h-full flex flex-col justify-between p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#060b17] via-[#091122] to-[#030610] border border-blue-900/40 overflow-hidden relative shadow-2xl">
+                        <div class="shrink-0 flex items-center justify-between border-b border-white/10 pb-2.5">
+                            <span class="text-xs font-bold text-white uppercase tracking-wider">Touchpoints &amp; Channels</span>
+                            <span class="text-[10px] font-mono text-blue-400">Unified Knowledge Graph</span>
+                        </div>
+
+                        <div class="flex-1 min-h-0 flex flex-col justify-between py-3 gap-3">
+                            <div class="shrink-0">
+                                <h2 class="font-display font-bold text-xl sm:text-2xl text-white leading-tight">
+                                    AI-First OmniAgents <span class="text-[#1e6bff]">across Channels</span>
+                                </h2>
+                                <p class="text-xs text-slate-300 leading-relaxed mt-1">
+                                    Unified Knowledge Base, consistent brand persona, and seamless conversational hand-offs across all existing and emerging channels.
+                                </p>
+                            </div>
+
+                            <!-- Expanded Channel Cards Filling Vertical Area -->
+                            <div class="flex-1 min-h-0 flex flex-col justify-between gap-2.5">
+                                <div class="p-3 rounded-xl bg-black/40 border border-white/10 flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <svg class="w-8 h-5 text-white shrink-0" viewBox="0 0 60 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2,13 Q28,10 52,12" /><path d="M42,6 Q50,10 55,12 Q49,15 41,19" /></svg>
+                                        <div>
+                                            <span class="font-display font-bold text-sm sm:text-base text-[#1e6bff]">Emails</span>
+                                            <p class="text-[10px] text-slate-400">Autonomous ticket triage &amp; complex multi-turn email replies</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-[10px] font-mono text-emerald-400 font-semibold">Active</span>
+                                </div>
+
+                                <div class="p-3 rounded-xl bg-black/40 border border-white/10 flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <svg class="w-8 h-5 text-white shrink-0" viewBox="0 0 60 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2,13 Q28,10 52,12" /><path d="M42,6 Q50,10 55,12 Q49,15 41,19" /></svg>
+                                        <div>
+                                            <span class="font-display font-bold text-sm sm:text-base text-[#1e6bff]">Voice Calls</span>
+                                            <p class="text-[10px] text-slate-400">Real-time telephony with voice activity detection &amp; barge-in</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-[10px] font-mono text-emerald-400 font-semibold">&lt;450ms</span>
+                                </div>
+
+                                <div class="p-3 rounded-xl bg-black/40 border border-white/10 flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <svg class="w-8 h-5 text-white shrink-0" viewBox="0 0 60 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2,13 Q28,10 52,12" /><path d="M42,6 Q50,10 55,12 Q49,15 41,19" /></svg>
+                                        <div>
+                                            <span class="font-display font-bold text-sm sm:text-base text-[#1e6bff]">Web Chat</span>
+                                            <p class="text-[10px] text-slate-400">Zero-latency customer assistance embedded into any web portal</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-[10px] font-mono text-blue-400 font-semibold">Instant</span>
+                                </div>
+
+                                <div class="p-3 rounded-xl bg-black/40 border border-white/10 flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <svg class="w-8 h-5 text-white shrink-0" viewBox="0 0 60 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2,13 Q28,10 52,12" /><path d="M42,6 Q50,10 55,12 Q49,15 41,19" /></svg>
+                                        <div>
+                                            <span class="font-display font-bold text-sm sm:text-base text-[#1e6bff]">Messaging Apps</span>
+                                            <p class="text-[10px] text-slate-400">WhatsApp, Telegram, and SMS automated resolution flows</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-[10px] font-mono text-purple-400 font-semibold">Omni</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="shrink-0 flex items-center justify-between text-xs text-slate-400 border-t border-white/10 pt-2.5">
+                            <span>Unified Knowledge Graph</span>
+                            <span class="text-blue-400 font-semibold">Zero Context Loss</span>
+                        </div>
+                    </div>
+
+                    <!-- =====================================================
+                         SLIDE 2: HITECH SYMPHONY (Full Height Coverage)
+                         ===================================================== -->
+                    <div id="slide-2" data-screen-id="hitech_symphony" class="slide-panel inactive w-full h-full flex flex-col justify-between p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#060a16] via-[#091126] to-[#02050e] border border-blue-900/40 overflow-hidden relative shadow-2xl">
+                        <div class="shrink-0 flex items-center justify-between border-b border-white/10 pb-2.5">
+                            <span class="text-xs font-bold text-white uppercase tracking-wider">Audio Pipeline Architecture</span>
+                            <span class="text-[10px] font-mono text-emerald-400">&lt; 450ms Turnaround</span>
+                        </div>
+
+                        <div class="flex-1 min-h-0 flex flex-col justify-between py-3 gap-3">
+                            <div class="shrink-0">
+                                <h2 class="font-display font-bold text-lg sm:text-xl text-white leading-tight">
+                                    HiTech Symphony for <span class="text-[#1e6bff]">OmniAgents</span>
+                                </h2>
+                                <p class="text-xs text-slate-300 leading-relaxed mt-0.5">
+                                    Under the hood our real-time audio pipelines orchestrate noise suppression, STT, LLM reasoning, and neural TTS.
+                                </p>
+                            </div>
+
+                            <!-- 4 Expansive Architecture Cards -->
+                            <div class="flex-1 min-h-0 grid grid-cols-2 gap-2.5 sm:gap-3">
+                                <div class="p-3 rounded-xl bg-blue-950/40 border border-blue-800/40 flex flex-col justify-between">
+                                    <div>
+                                        <div class="font-bold text-blue-400 text-xs sm:text-sm mb-1">1. Speech to Text</div>
+                                        <p class="text-slate-300 text-[11px] leading-snug">Noise Resilient • Indian Languages (Hindi, Hinglish, Bengali, Odia, Telugu)</p>
+                                    </div>
+                                    <span class="text-[9px] font-mono text-blue-400 font-semibold mt-2">VAD &amp; Ambient Filtering</span>
+                                </div>
+
+                                <div class="p-3 rounded-xl bg-blue-950/40 border border-blue-800/40 flex flex-col justify-between">
+                                    <div>
+                                        <div class="font-bold text-indigo-400 text-xs sm:text-sm mb-1">2. NLU + LLM</div>
+                                        <p class="text-slate-300 text-[11px] leading-snug">Fast Contextual Inference • 30+ Intent Classifications • Dynamic Guardrails</p>
+                                    </div>
+                                    <span class="text-[9px] font-mono text-indigo-400 font-semibold mt-2">Zero-Shot Fallback</span>
+                                </div>
+
+                                <div class="p-3 rounded-xl bg-blue-950/40 border border-blue-800/40 flex flex-col justify-between">
+                                    <div>
+                                        <div class="font-bold text-sky-400 text-xs sm:text-sm mb-1">3. Text to Speech</div>
+                                        <p class="text-slate-300 text-[11px] leading-snug">Low Latency Neural Synthesis • Humane Filler Sounds • Tone Modulation</p>
+                                    </div>
+                                    <span class="text-[9px] font-mono text-sky-400 font-semibold mt-2">Humane Realism</span>
+                                </div>
+
+                                <div class="p-3 rounded-xl bg-blue-950/40 border border-blue-800/40 flex flex-col justify-between">
+                                    <div>
+                                        <div class="font-bold text-emerald-400 text-xs sm:text-sm mb-1">4. Integrations</div>
+                                        <p class="text-slate-300 text-[11px] leading-snug">100+ Enterprise Systems • SAP, Salesforce, Zoho, CRM • SIP Trunking</p>
+                                    </div>
+                                    <span class="text-[9px] font-mono text-emerald-400 font-semibold mt-2">Telephony &amp; Webhooks</span>
+                                </div>
+                            </div>
+
+                            <!-- Equalizer Visualizer Banner -->
+                            <div class="shrink-0 bg-black/60 p-2.5 rounded-xl border border-white/10 flex items-center justify-between px-4">
+                                <span class="text-[10px] font-mono text-slate-400 font-medium">REALTIME AUDIO EQUALIZER</span>
+                                <div id="symphony-eq-bars" class="flex items-center gap-1.5 h-6"></div>
+                            </div>
+                        </div>
+
+                        <div class="shrink-0 flex items-center justify-between text-xs text-slate-400 border-t border-white/10 pt-2.5">
+                            <span>Audio Latency SLA</span>
+                            <span class="text-emerald-400 font-mono font-semibold">&lt; 450ms Total Turnaround</span>
+                        </div>
+                    </div>
+
+                    <!-- =====================================================
+                         SLIDE 3: 10 CORE FEATURES (Full Height Coverage)
+                         ===================================================== -->
+                    <div id="slide-3" data-screen-id="core_ten_features" class="slide-panel inactive w-full h-full flex flex-col justify-between p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#060b18] via-[#081228] to-[#030612] border border-blue-900/40 overflow-hidden relative shadow-2xl">
+                        <div class="shrink-0 flex items-center justify-between border-b border-white/10 pb-2.5">
+                            <span class="text-xs font-bold text-white uppercase tracking-wider">Features &amp; Capabilities</span>
+                            <span class="text-[10px] font-mono text-blue-400">10 Core Pillars</span>
+                        </div>
+
+                        <div class="flex-1 min-h-0 flex flex-col justify-between py-3 gap-3">
+                            <div class="shrink-0">
+                                <h2 class="font-display font-bold text-xl sm:text-2xl text-white">
+                                    Why OmniAgent: <span class="text-[#1e6bff]">Core Features</span>
+                                </h2>
+                                <p class="text-xs text-slate-300 mt-0.5">Enterprise-grade telemetry, compliance, and multi-dialect voice synthesis.</p>
+                            </div>
+
+                            <!-- 10 Capabilities Stretched Evenly Across Full Height -->
+                            <div class="flex-1 min-h-0 grid grid-cols-2 gap-2.5 content-between bg-black/40 p-3 sm:p-3.5 rounded-xl border border-white/5">
+                                <div class="flex items-center gap-2.5 p-1.5 rounded-lg hover:bg-white/5 transition"><span class="w-6 h-6 rounded-lg bg-blue-600/30 text-blue-400 flex items-center justify-center font-bold text-xs shrink-0">1</span><span class="text-slate-200 text-xs sm:text-sm font-medium">100% Call Transcript</span></div>
+                                <div class="flex items-center gap-2.5 p-1.5 rounded-lg hover:bg-white/5 transition"><span class="w-6 h-6 rounded-lg bg-blue-600/30 text-blue-400 flex items-center justify-center font-bold text-xs shrink-0">2</span><span class="text-slate-200 text-xs sm:text-sm font-medium">5% Call Audits</span></div>
+                                <div class="flex items-center gap-2.5 p-1.5 rounded-lg hover:bg-white/5 transition"><span class="w-6 h-6 rounded-lg bg-blue-600/30 text-blue-400 flex items-center justify-center font-bold text-xs shrink-0">3</span><span class="text-slate-200 text-xs sm:text-sm font-medium">Realtime Recording</span></div>
+                                <div class="flex items-center gap-2.5 p-1.5 rounded-lg hover:bg-white/5 transition"><span class="w-6 h-6 rounded-lg bg-blue-600/30 text-blue-400 flex items-center justify-center font-bold text-xs shrink-0">4</span><span class="text-slate-200 text-xs sm:text-sm font-medium">17 Languages</span></div>
+                                <div class="flex items-center gap-2.5 p-1.5 rounded-lg hover:bg-white/5 transition"><span class="w-6 h-6 rounded-lg bg-blue-600/30 text-blue-400 flex items-center justify-center font-bold text-xs shrink-0">5</span><span class="text-slate-200 text-xs sm:text-sm font-medium">Tone Modulation</span></div>
+                                <div class="flex items-center gap-2.5 p-1.5 rounded-lg hover:bg-white/5 transition"><span class="w-6 h-6 rounded-lg bg-blue-600/30 text-blue-400 flex items-center justify-center font-bold text-xs shrink-0">6</span><span class="text-slate-200 text-xs sm:text-sm font-medium">Background Ambience</span></div>
+                                <div class="flex items-center gap-2.5 p-1.5 rounded-lg hover:bg-white/5 transition"><span class="w-6 h-6 rounded-lg bg-blue-600/30 text-blue-400 flex items-center justify-center font-bold text-xs shrink-0">7</span><span class="text-slate-200 text-xs sm:text-sm font-medium">CRM &amp; SAP Integration</span></div>
+                                <div class="flex items-center gap-2.5 p-1.5 rounded-lg hover:bg-white/5 transition"><span class="w-6 h-6 rounded-lg bg-blue-600/30 text-blue-400 flex items-center justify-center font-bold text-xs shrink-0">8</span><span class="text-slate-200 text-xs sm:text-sm font-medium">Sentiment Detection</span></div>
+                                <div class="flex items-center gap-2.5 p-1.5 rounded-lg hover:bg-white/5 transition"><span class="w-6 h-6 rounded-lg bg-blue-600/30 text-blue-400 flex items-center justify-center font-bold text-xs shrink-0">9</span><span class="text-slate-200 text-xs sm:text-sm font-medium">SIP &amp; IVRS Handoff</span></div>
+                                <div class="flex items-center gap-2.5 p-1.5 rounded-lg hover:bg-white/5 transition"><span class="w-6 h-6 rounded-lg bg-blue-600/30 text-blue-400 flex items-center justify-center font-bold text-xs shrink-0">10</span><span class="text-slate-200 text-xs sm:text-sm font-medium">Behavioral Coaching</span></div>
+                            </div>
+
+                            <div class="shrink-0 p-2.5 rounded-xl bg-white/5 border border-white/5">
+                                <p class="text-xs text-slate-300 italic text-center">
+                                    *Backed by 23+ years of IT &amp; BPO operational experience at TATWA TECHNOLOGIES.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="shrink-0 flex items-center justify-between text-xs text-slate-400 border-t border-white/10 pt-2.5">
+                            <span>Compliance Ready</span>
+                            <span class="text-blue-400 font-semibold">100% Audit Coverage</span>
+                        </div>
+                    </div>
+
+                    <!-- =====================================================
+                         SLIDE 4: COACHING & AMBIENCE (Full Height Coverage)
+                         ===================================================== -->
+                    <div id="slide-4" data-screen-id="features_coaching_sounds" class="slide-panel inactive w-full h-full flex flex-col justify-between p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#060a16] via-[#091124] to-[#02050e] border border-blue-900/40 overflow-hidden relative shadow-2xl">
+                        <div class="shrink-0 flex items-center justify-between border-b border-white/10 pb-2.5">
+                            <span class="text-xs font-bold text-white uppercase tracking-wider">Features : Coaching &amp; Sounds</span>
+                            <span class="text-[10px] font-mono text-emerald-400">Acoustic Engine</span>
+                        </div>
+
+                        <!-- 2 Lavendar Cards Expanding to Fill Entire Height -->
+                        <div class="flex-1 min-h-0 flex flex-col justify-between py-3 gap-3">
+                            <!-- Lavender Card 1: New Coaching Modal UI -->
+                            <div class="omni-card-frame flex-1 flex flex-col justify-between">
+                                <div class="omni-card-inner p-3.5 sm:p-4 flex flex-col justify-between h-full">
+                                    <div class="flex items-center justify-between border-b border-gray-200 pb-2 mb-2">
+                                        <span class="font-bold text-gray-900 font-display text-sm sm:text-base">New Coaching Scenario</span>
+                                        <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-700 text-xs font-mono font-bold">Active</span>
+                                    </div>
+                                    <div class="space-y-2 text-xs sm:text-sm flex-1 flex flex-col justify-center">
+                                        <div class="flex justify-between items-center"><strong class="text-gray-600">Scenario:</strong> <span class="text-gray-900 font-medium">Customer Dispute Escalation</span></div>
+                                        <div class="flex justify-between items-center"><strong class="text-gray-600">Agent Tone:</strong> <span class="text-blue-700 font-semibold">Empathetic, De-escalating</span></div>
+                                        <div class="flex justify-between items-center"><strong class="text-gray-600">Agents:</strong> <span class="text-gray-900 font-medium">Inbound Support Squad (Tier-1)</span></div>
+                                        <div class="flex justify-between items-center"><strong class="text-gray-600">Supervisor Alert:</strong> <span class="text-emerald-700 font-medium">Auto-Trigger if Sentiment &lt; 3.0</span></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Lavender Card 2: Background Sounds Configuration -->
+                            <div class="omni-card-frame flex-1 flex flex-col justify-between">
+                                <div class="omni-card-inner p-3.5 sm:p-4 flex flex-col justify-between h-full">
+                                    <div class="flex items-center justify-between border-b border-gray-200 pb-2 mb-2">
+                                        <span class="font-bold text-gray-900 font-display text-sm sm:text-base">Background Ambient Sounds</span>
+                                        <span class="text-xs font-mono text-gray-500 font-semibold">Human Realism</span>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-2 text-xs flex-1 content-center">
+                                        <div class="p-2 rounded-lg bg-slate-100 flex items-center justify-between"><span class="font-medium text-slate-700">Office Sound</span><span class="text-emerald-600 font-bold">ON (40%)</span></div>
+                                        <div class="p-2 rounded-lg bg-slate-100 flex items-center justify-between"><span class="font-medium text-slate-700">Cafe Ambience</span><span class="text-slate-400 font-bold">OFF</span></div>
+                                        <div class="p-2 rounded-lg bg-slate-100 flex items-center justify-between"><span class="font-medium text-slate-700">Keyboard Typing</span><span class="text-emerald-600 font-bold">ON (25%)</span></div>
+                                        <div class="p-2 rounded-lg bg-slate-100 flex items-center justify-between"><span class="font-medium text-slate-700">Call Center</span><span class="text-emerald-600 font-bold">ON (35%)</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="shrink-0 flex items-center justify-between text-xs text-slate-400 border-t border-white/10 pt-2.5">
+                            <span>Acoustic Calibration</span>
+                            <span class="text-emerald-400 font-semibold">Natural Human Authenticity</span>
+                        </div>
+                    </div>
+
+                    <!-- =====================================================
+                         SLIDE 5: WIDGET & QA (Full Height Coverage)
+                         ===================================================== -->
+                    <div id="slide-5" data-screen-id="features_widget_evaluation" class="slide-panel inactive w-full h-full flex flex-col justify-between p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#060a16] via-[#091124] to-[#02050e] border border-blue-900/40 overflow-hidden relative shadow-2xl">
+                        <div class="shrink-0 flex items-center justify-between border-b border-white/10 pb-2.5">
+                            <span class="text-xs font-bold text-white uppercase tracking-wider">Features : Widget &amp; Evaluation</span>
+                            <span class="text-[10px] font-mono text-blue-400">Automated QA</span>
+                        </div>
+
+                        <div class="flex-1 min-h-0 flex flex-col justify-between py-3 gap-3">
+                            <!-- Lavender Card 1: Customizable Support Widget -->
+                            <div class="omni-card-frame flex-1 flex flex-col justify-between">
+                                <div class="omni-card-inner p-3.5 sm:p-4 flex flex-col justify-between h-full">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="font-bold text-gray-900 font-display text-sm sm:text-base">Customizable Support Widget</span>
+                                        <span class="px-2 py-0.5 rounded bg-purple-100 text-purple-700 text-xs font-mono font-bold">Web Embed</span>
+                                    </div>
+                                    <div class="flex items-center gap-3 bg-purple-50 p-3 rounded-xl border border-purple-200">
+                                        <div class="w-10 h-10 rounded-full bg-purple-600 text-white flex items-center justify-center shrink-0 shadow-lg shadow-purple-600/30">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+                                        </div>
+                                        <div>
+                                            <div class="font-bold text-gray-900 text-xs sm:text-sm">Speak with AI Specialist</div>
+                                            <div class="text-[11px] text-gray-600">Voice + Chat floating widget with enterprise custom styling</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between text-[11px] text-gray-500 pt-2 border-t border-gray-100">
+                                        <span>Brand Color: Royal Indigo</span>
+                                        <span>Position: Bottom-Right</span>
+                                        <span class="text-emerald-600 font-semibold">Active</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Lavender Card 2: Evaluation Results Table -->
+                            <div class="omni-card-frame flex-1 flex flex-col justify-between">
+                                <div class="omni-card-inner p-3.5 sm:p-4 flex flex-col justify-between h-full">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="font-bold text-gray-900 font-display text-sm sm:text-base">Evaluation Results</span>
+                                        <span class="font-bold text-amber-600 text-xs sm:text-sm">9.1 / 10 ★★★★★</span>
+                                    </div>
+                                    <table class="w-full text-left text-xs sm:text-sm border-collapse flex-1">
+                                        <thead>
+                                            <tr class="border-b border-gray-100 text-gray-500"><th class="pb-1">Metric</th><th class="pb-1">Score</th><th class="pb-1 text-right">Status</th></tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-gray-100">
+                                            <tr><td class="py-1.5 font-medium text-gray-800">Greeting &amp; Tone</td><td class="py-1.5 text-blue-600 font-bold">9.4</td><td class="py-1.5 text-right text-emerald-600 font-bold">PASS</td></tr>
+                                            <tr><td class="py-1.5 font-medium text-gray-800">Intent Discovery</td><td class="py-1.5 text-blue-600 font-bold">8.9</td><td class="py-1.5 text-right text-emerald-600 font-bold">PASS</td></tr>
+                                            <tr><td class="py-1.5 font-medium text-gray-800">Resolution &amp; Closing</td><td class="py-1.5 text-blue-600 font-bold">9.2</td><td class="py-1.5 text-right text-emerald-600 font-bold">PASS</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="shrink-0 flex items-center justify-between text-xs text-slate-400 border-t border-white/10 pt-2.5">
+                            <span>Quality Assurance</span>
+                            <span class="text-blue-400 font-semibold">Automated Grading</span>
+                        </div>
+                    </div>
+
+                    <!-- =====================================================
+                         SLIDE 6: ANALYTICS & QA (Full Height Coverage)
+                         ===================================================== -->
+                    <div id="slide-6" data-screen-id="features_analytics_qa" class="slide-panel inactive w-full h-full flex flex-col justify-between p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#060a16] via-[#091124] to-[#02050e] border border-blue-900/40 overflow-hidden relative shadow-2xl">
+                        <div class="shrink-0 flex items-center justify-between border-b border-white/10 pb-2.5">
+                            <span class="text-xs font-bold text-white uppercase tracking-wider">Features : Analytics &amp; QA</span>
+                            <span class="text-[10px] font-mono text-emerald-400">Real-Time Metrics</span>
+                        </div>
+
+                        <div class="flex-1 min-h-0 flex flex-col justify-between py-3 gap-3">
+                            <!-- Card 1: Call Connectivity by Agent (Taller, Expanded Bar Chart) -->
+                            <div class="flex-1 min-h-0 bg-black/50 p-3.5 sm:p-4 rounded-xl border border-white/10 flex flex-col justify-between">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="font-bold text-xs sm:text-sm text-white">Call Connectivity by Agent</span>
+                                    <span class="text-xs font-mono text-emerald-400 font-bold">98.4% Connected</span>
+                                </div>
+                                
+                                <!-- Taller Expanded Bar Chart Filling Space -->
+                                <div class="flex-1 min-h-[90px] sm:min-h-[110px] flex items-end justify-between gap-1.5 px-2 pt-2">
+                                    <div class="w-full bg-blue-600/90 rounded-t hover:bg-blue-500 transition" style="height: 45%;"></div>
+                                    <div class="w-full bg-blue-600/90 rounded-t hover:bg-blue-500 transition" style="height: 65%;"></div>
+                                    <div class="w-full bg-blue-600/90 rounded-t hover:bg-blue-500 transition" style="height: 85%;"></div>
+                                    <div class="w-full bg-blue-500/90 rounded-t hover:bg-blue-500 transition" style="height: 50%;"></div>
+                                    <div class="w-full bg-blue-600/90 rounded-t hover:bg-blue-500 transition" style="height: 95%;"></div>
+                                    <div class="w-full bg-blue-600/90 rounded-t hover:bg-blue-500 transition" style="height: 70%;"></div>
+                                    <div class="w-full bg-blue-500/90 rounded-t hover:bg-blue-500 transition" style="height: 60%;"></div>
+                                    <div class="w-full bg-blue-600/90 rounded-t hover:bg-blue-500 transition" style="height: 90%;"></div>
+                                    <div class="w-full bg-blue-600/90 rounded-t hover:bg-blue-500 transition" style="height: 80%;"></div>
+                                    <div class="w-full bg-blue-500/90 rounded-t hover:bg-blue-500 transition" style="height: 55%;"></div>
+                                    <div class="w-full bg-blue-600/90 rounded-t hover:bg-blue-500 transition" style="height: 100%;"></div>
+                                    <div class="w-full bg-blue-600/90 rounded-t hover:bg-blue-500 transition" style="height: 88%;"></div>
+                                </div>
+                                <div class="flex items-center justify-between text-[10px] font-mono text-slate-500 pt-2 px-1 border-t border-white/5 mt-1">
+                                    <span>08:00</span><span>10:00</span><span>12:00</span><span>14:00</span><span>16:00</span><span>18:00</span><span>20:00</span>
+                                </div>
+                            </div>
+
+                            <!-- Card 2: AI Analyst & QA Dashboard (Expanded) -->
+                            <div class="flex-1 min-h-0 bg-black/50 p-3.5 sm:p-4 rounded-xl border border-white/10 flex items-center gap-4">
+                                <!-- Larger Donut Chart -->
+                                <div class="relative w-20 h-20 sm:w-24 sm:h-24 shrink-0 flex items-center justify-center">
+                                    <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
+                                        <path class="text-gray-800" stroke-width="3.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                        <path class="text-emerald-500" stroke-dasharray="86, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    </svg>
+                                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center leading-none">
+                                        <span class="text-base sm:text-lg font-bold text-white">86%</span>
+                                        <span class="text-[8px] sm:text-[9px] text-gray-400 mt-0.5">Success</span>
+                                    </div>
+                                </div>
+
+                                <!-- Key Metric Cards -->
+                                <div class="flex-1 grid grid-cols-3 gap-2 text-center">
+                                    <div class="p-2 sm:p-2.5 rounded-lg bg-white/5 border border-white/5 flex flex-col justify-between">
+                                        <div class="text-[9px] text-slate-400 uppercase font-medium">Avg Score</div>
+                                        <div class="text-sm sm:text-base font-bold text-blue-400">8.7</div>
+                                    </div>
+                                    <div class="p-2 sm:p-2.5 rounded-lg bg-white/5 border border-white/5 flex flex-col justify-between">
+                                        <div class="text-[9px] text-slate-400 uppercase font-medium">Drop Rate</div>
+                                        <div class="text-sm sm:text-base font-bold text-amber-400">2.4%</div>
+                                    </div>
+                                    <div class="p-2 sm:p-2.5 rounded-lg bg-white/5 border border-white/5 flex flex-col justify-between">
+                                        <div class="text-[9px] text-slate-400 uppercase font-medium">Compliance</div>
+                                        <div class="text-sm sm:text-base font-bold text-emerald-400">96.8%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="shrink-0 flex items-center justify-between text-xs text-slate-400 border-t border-white/10 pt-2.5">
+                            <span>Operational Intelligence</span>
+                            <span class="text-emerald-400 font-semibold">Real-Time Dashboards</span>
+                        </div>
+                    </div>
+
+                    <!-- =====================================================
+                         SLIDE 7: GLOBAL PRESENCE (Full Height Coverage)
+                         ===================================================== -->
+                    <div id="slide-7" data-screen-id="global_presence" class="slide-panel inactive w-full h-full flex flex-col justify-between p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#060a16] via-[#091124] to-[#02050e] border border-blue-900/40 overflow-hidden relative shadow-2xl">
+                        <div class="shrink-0 flex items-center justify-between border-b border-white/10 pb-2.5">
+                            <span class="text-xs font-bold text-white uppercase tracking-wider">Footprint &amp; Delivery</span>
+                            <span class="text-[10px] font-mono text-blue-400">Global Hubs</span>
+                        </div>
+
+                        <div class="flex-1 min-h-0 flex flex-col justify-between py-3 gap-3">
+                            <div class="shrink-0">
+                                <h2 class="font-display font-bold text-xl sm:text-2xl text-white">
+                                    Our <span class="text-[#1e6bff]">Presence</span>
+                                </h2>
+                                <p class="text-xs text-slate-300 mt-1">
+                                    Serving global enterprises with world-class Indian delivery infrastructure.
+                                </p>
+                            </div>
+
+                            <!-- Expanded Section 1: Global Hubs Grid -->
+                            <div class="bg-black/50 p-3 sm:p-3.5 rounded-xl border border-white/10">
+                                <div class="text-[10px] font-mono text-blue-400 font-semibold uppercase mb-2">Global Enterprise Hubs:</div>
+                                <div class="grid grid-cols-3 sm:grid-cols-5 gap-2">
+                                    <div class="p-2 rounded-lg bg-blue-950/60 border border-blue-800/50 text-center"><div class="text-sm">🇺🇸</div><div class="text-xs font-bold text-white mt-0.5">USA</div></div>
+                                    <div class="p-2 rounded-lg bg-blue-950/60 border border-blue-800/50 text-center"><div class="text-sm">🇦🇪</div><div class="text-xs font-bold text-white mt-0.5">Dubai</div></div>
+                                    <div class="p-2 rounded-lg bg-blue-950/60 border border-blue-800/50 text-center"><div class="text-sm">🌍</div><div class="text-xs font-bold text-white mt-0.5">Africa</div></div>
+                                    <div class="p-2 rounded-lg bg-blue-950/60 border border-blue-800/50 text-center"><div class="text-sm">🇸🇬</div><div class="text-xs font-bold text-white mt-0.5">Singapore</div></div>
+                                    <div class="p-2 rounded-lg bg-blue-950/60 border border-blue-800/50 text-center"><div class="text-sm">🇮🇳</div><div class="text-xs font-bold text-white mt-0.5">India</div></div>
+                                </div>
+                            </div>
+
+                            <!-- Expanded Section 2: India Delivery Centers -->
+                            <div class="flex-1 min-h-0 bg-black/50 p-3 sm:p-3.5 rounded-xl border border-white/10 flex flex-col justify-between">
+                                <div class="text-[10px] font-mono text-emerald-400 font-semibold uppercase mb-1.5">India Delivery Centers:</div>
+                                <div class="grid grid-cols-2 gap-2 text-xs sm:text-sm flex-1 content-center">
+                                    <div class="flex items-center gap-2 p-1.5 rounded-lg bg-white/5"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span><span class="text-white font-medium">Bhubaneswar (HQ)</span></div>
+                                    <div class="flex items-center gap-2 p-1.5 rounded-lg bg-white/5"><span class="w-2 h-2 rounded-full bg-blue-400"></span><span class="text-slate-200">Noida</span></div>
+                                    <div class="flex items-center gap-2 p-1.5 rounded-lg bg-white/5"><span class="w-2 h-2 rounded-full bg-blue-400"></span><span class="text-slate-200">Kolkata</span></div>
+                                    <div class="flex items-center gap-2 p-1.5 rounded-lg bg-white/5"><span class="w-2 h-2 rounded-full bg-blue-400"></span><span class="text-slate-200">Hyderabad</span></div>
+                                    <div class="flex items-center gap-2 p-1.5 rounded-lg bg-white/5 col-span-2"><span class="w-2 h-2 rounded-full bg-blue-400"></span><span class="text-slate-200">Mumbai</span></div>
+                                </div>
+                                <div class="text-center pt-2 border-t border-white/5 mt-2">
+                                    <a href="https://www.tatwa.com" target="_blank" class="text-xs font-mono text-blue-400 hover:underline">www.tatwa.com</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="shrink-0 flex items-center justify-between text-xs text-slate-400 border-t border-white/10 pt-2.5">
+                            <span>Global Delivery</span>
+                            <span class="text-blue-400 font-semibold">24x7 Operations</span>
+                        </div>
+                    </div>
+
+                    <!-- =====================================================
+                         SLIDE 8: DEPLOYMENT CTA (Full Height Coverage)
+                         ===================================================== -->
+                    <div id="slide-8" data-screen-id="transform_cta" class="slide-panel inactive w-full h-full flex flex-col justify-between p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#060b18] via-[#091228] to-[#02050e] border border-blue-900/40 overflow-hidden relative shadow-2xl">
+                        <div class="shrink-0 flex items-center justify-between border-b border-white/10 pb-2.5">
+                            <span class="text-xs font-bold text-white uppercase tracking-wider">Enterprise Roadmap</span>
+                            <span class="text-[10px] font-mono text-blue-400">24h–72h Delivery</span>
+                        </div>
+
+                        <div class="flex-1 min-h-0 flex flex-col justify-between py-3 gap-3">
+                            <div class="shrink-0">
+                                <h2 class="font-display font-extrabold text-xl sm:text-2xl text-white leading-tight">
+                                    <span class="text-[#1e6bff]">AIforms</span> Your Business Today
+                                </h2>
+                                <p class="text-xs text-slate-300 leading-tight mt-1">
+                                    Predictive &amp; Generative AI solutions tailored for enterprise transformation.
+                                </p>
+                            </div>
+
+                            <!-- 3 Pillars Stretched to Fill Space -->
+                            <div class="flex-1 min-h-0 flex flex-col justify-between gap-2.5">
+                                <div class="p-3.5 rounded-xl bg-blue-950/40 border border-blue-800/40 flex items-center justify-between">
+                                    <div>
+                                        <div class="font-bold text-white text-xs sm:text-sm">Accelerate Adoption</div>
+                                        <div class="text-[11px] text-slate-300">Working prototype &amp; domain knowledge ingestion</div>
+                                    </div>
+                                    <span class="px-2.5 py-1 rounded-lg bg-blue-600 text-white font-mono font-bold text-xs shrink-0">24 Hours</span>
+                                </div>
+
+                                <div class="p-3.5 rounded-xl bg-blue-950/40 border border-blue-800/40 flex items-center justify-between">
+                                    <div>
+                                        <div class="font-bold text-white text-xs sm:text-sm">Enterprise Ready</div>
+                                        <div class="text-[11px] text-slate-300">Live production telephony &amp; CRM/ERP sync</div>
+                                    </div>
+                                    <span class="px-2.5 py-1 rounded-lg bg-emerald-600 text-white font-mono font-bold text-xs shrink-0">72 Hours</span>
+                                </div>
+
+                                <div class="p-3.5 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
+                                    <div>
+                                        <div class="font-bold text-white text-xs sm:text-sm">AI With Us</div>
+                                        <div class="text-[11px] text-slate-300">Dedicated AI solutions architect &amp; continuous tuning</div>
+                                    </div>
+                                    <span class="text-xs font-mono text-blue-400 font-bold shrink-0">TATWA 2.0</span>
+                                </div>
+                            </div>
+
+                            <div class="shrink-0 pt-1 text-center">
+                                <a href="https://www.omniagent.in" target="_blank" class="inline-block w-full py-2.5 rounded-xl bg-[#1e6bff] hover:bg-blue-500 text-white font-display font-semibold text-xs sm:text-sm transition shadow-lg shadow-blue-600/30">
+                                    Deploy Enterprise Pilot →
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="shrink-0 flex items-center justify-between text-xs text-slate-400 border-t border-white/10 pt-2.5">
+                            <span>www.tatwa.com</span>
+                            <span class="text-blue-400 font-semibold">www.omniagent.in</span>
+                        </div>
+                    </div>
+
+                    <!-- =====================================================
+                         SLIDE 9: 01 DEPLOY AI OMNIAGENTS (GIF Full Space Coverage)
+                         ===================================================== -->
+                    <div id="slide-9" data-screen-id="lifecycle_deploy" class="slide-panel inactive w-full h-full flex flex-col justify-between p-3.5 sm:p-4 rounded-2xl bg-[#f8fafc] text-slate-900 border border-slate-300 overflow-hidden relative shadow-2xl">
+                        <!-- Top Nav Pills -->
+                        <div class="shrink-0 flex items-center justify-center pb-2 border-b border-slate-200">
+                            <div class="flex items-center gap-1.5 bg-slate-200/90 p-1 rounded-full">
+                                <button onclick="window.goToSlide(9)" class="px-4 py-1.5 rounded-full text-xs font-semibold uppercase bg-black text-white shadow-sm transition">Deploy</button>
+                                <button onclick="window.goToSlide(10)" class="px-4 py-1.5 rounded-full text-xs font-semibold uppercase text-slate-600 hover:text-black transition">Adapt</button>
+                                <button onclick="window.goToSlide(11)" class="px-4 py-1.5 rounded-full text-xs font-semibold uppercase text-slate-600 hover:text-black transition">Scale</button>
+                                <button onclick="window.goToSlide(12)" class="px-4 py-1.5 rounded-full text-xs font-semibold uppercase text-slate-600 hover:text-black transition">Govern</button>
+                            </div>
+                        </div>
+
+                        <!-- Text Block -->
+                        <div class="shrink-0 py-2">
+                            <span class="text-xs font-mono font-bold text-slate-400">01</span>
+                            <h2 class="font-display font-extrabold text-xl sm:text-2xl text-slate-950 tracking-tight leading-tight mt-0.5">
+                                Deploy AI OmniAgents
+                            </h2>
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-xl mt-1 font-normal">
+                                Build voice agents that can handle a wide range of conversations and tasks. With our intuitive drag-and-drop interface, you can easily create and customize agents for your business needs.
+                            </p>
+                        </div>
+
+                        <!-- GIF Media Frame Stretched to Fill Vertical Space -->
+                        <div class="flex-1 min-h-0 w-full relative rounded-xl overflow-hidden bg-slate-950 border border-slate-300 shadow-lg flex items-center justify-center">
+                            <img src="GIFs/Deloy.gif" alt="Deploy AI OmniAgents Workflow GIF" class="w-full h-full object-contain" loading="lazy" />
+                        </div>
+
+                        <!-- Footer -->
+                        <div class="shrink-0 flex items-center justify-between text-xs text-slate-500 pt-2 border-t border-slate-200">
+                            <span>Step 01 • Drag-and-Drop Builder</span>
+                            <span class="font-mono text-blue-600 font-bold">Deploy Mode</span>
+                        </div>
+                    </div>
+
+                    <!-- =====================================================
+                         SLIDE 10: 02 ADAPT TO YOUR BUSINESS (GIF Full Space Coverage)
+                         ===================================================== -->
+                    <div id="slide-10" data-screen-id="lifecycle_adapt" class="slide-panel inactive w-full h-full flex flex-col justify-between p-3.5 sm:p-4 rounded-2xl bg-[#f8fafc] text-slate-900 border border-slate-300 overflow-hidden relative shadow-2xl">
+                        <!-- Top Nav Pills -->
+                        <div class="shrink-0 flex items-center justify-center pb-2 border-b border-slate-200">
+                            <div class="flex items-center gap-1.5 bg-slate-200/90 p-1 rounded-full">
+                                <button onclick="window.goToSlide(9)" class="px-4 py-1.5 rounded-full text-xs font-semibold uppercase text-slate-600 hover:text-black transition">Deploy</button>
+                                <button onclick="window.goToSlide(10)" class="px-4 py-1.5 rounded-full text-xs font-semibold uppercase bg-black text-white shadow-sm transition">Adapt</button>
+                                <button onclick="window.goToSlide(11)" class="px-4 py-1.5 rounded-full text-xs font-semibold uppercase text-slate-600 hover:text-black transition">Scale</button>
+                                <button onclick="window.goToSlide(12)" class="px-4 py-1.5 rounded-full text-xs font-semibold uppercase text-slate-600 hover:text-black transition">Govern</button>
+                            </div>
+                        </div>
+
+                        <!-- Text Block -->
+                        <div class="shrink-0 py-2">
+                            <span class="text-xs font-mono font-bold text-slate-400">02</span>
+                            <h2 class="font-display font-extrabold text-xl sm:text-2xl text-slate-950 tracking-tight leading-tight mt-0.5">
+                                Adapt to your business
+                            </h2>
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-xl mt-1 font-normal">
+                                Make AI agents work exactly how you need them to. Easily adjust their behavior to match your business and what your customers expect. No complex setup needed.
+                            </p>
+                        </div>
+
+                        <!-- GIF Media Frame Stretched to Fill Vertical Space -->
+                        <div class="flex-1 min-h-0 w-full relative rounded-xl overflow-hidden bg-slate-950 border border-slate-300 shadow-lg flex items-center justify-center">
+                            <img src="GIFs/Adapt.gif" alt="Adapt to your business Workflow GIF" class="w-full h-full object-contain" loading="lazy" />
+                        </div>
+
+                        <!-- Footer -->
+                        <div class="shrink-0 flex items-center justify-between text-xs text-slate-500 pt-2 border-t border-slate-200">
+                            <span>Step 02 • Behavior Tuning</span>
+                            <span class="font-mono text-blue-600 font-bold">Adapt Mode</span>
+                        </div>
+                    </div>
+
+                    <!-- =====================================================
+                         SLIDE 11: 03 SCALE WITH CONFIDENCE (GIF Full Space Coverage)
+                         ===================================================== -->
+                    <div id="slide-11" data-screen-id="lifecycle_scale" class="slide-panel inactive w-full h-full flex flex-col justify-between p-3.5 sm:p-4 rounded-2xl bg-[#f8fafc] text-slate-900 border border-slate-300 overflow-hidden relative shadow-2xl">
+                        <!-- Top Nav Pills -->
+                        <div class="shrink-0 flex items-center justify-center pb-2 border-b border-slate-200">
+                            <div class="flex items-center gap-1.5 bg-slate-200/90 p-1 rounded-full">
+                                <button onclick="window.goToSlide(9)" class="px-4 py-1.5 rounded-full text-xs font-semibold uppercase text-slate-600 hover:text-black transition">Deploy</button>
+                                <button onclick="window.goToSlide(10)" class="px-4 py-1.5 rounded-full text-xs font-semibold uppercase text-slate-600 hover:text-black transition">Adapt</button>
+                                <button onclick="window.goToSlide(11)" class="px-4 py-1.5 rounded-full text-xs font-semibold uppercase bg-black text-white shadow-sm transition">Scale</button>
+                                <button onclick="window.goToSlide(12)" class="px-4 py-1.5 rounded-full text-xs font-semibold uppercase text-slate-600 hover:text-black transition">Govern</button>
+                            </div>
+                        </div>
+
+                        <!-- Text Block -->
+                        <div class="shrink-0 py-2">
+                            <span class="text-xs font-mono font-bold text-slate-400">03</span>
+                            <h2 class="font-display font-extrabold text-xl sm:text-2xl text-slate-950 tracking-tight leading-tight mt-0.5">
+                                Scale with Confidence
+                            </h2>
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-xl mt-1 font-normal">
+                                Handle growing customer demands with ease. Our platform automatically scales to match your needs, ensuring consistent performance and reliability whether you're handling hundreds or millions of conversations.
+                            </p>
+                        </div>
+
+                        <!-- GIF Media Frame Stretched to Fill Vertical Space -->
+                        <div class="flex-1 min-h-0 w-full relative rounded-xl overflow-hidden bg-slate-950 border border-slate-300 shadow-lg flex items-center justify-center">
+                            <img src="GIFs/Scale.gif" alt="Scale with Confidence Workflow GIF" class="w-full h-full object-contain" loading="lazy" />
+                        </div>
+
+                        <!-- Footer -->
+                        <div class="shrink-0 flex items-center justify-between text-xs text-slate-500 pt-2 border-t border-slate-200">
+                            <span>Step 03 • High Concurrency</span>
+                            <span class="font-mono text-blue-600 font-bold">Scale Mode</span>
+                        </div>
+                    </div>
+
+                    <!-- =====================================================
+                         SLIDE 12: 04 GOVERN (GIF Full Space Coverage)
+                         ===================================================== -->
+                    <div id="slide-12" data-screen-id="lifecycle_govern" class="slide-panel inactive w-full h-full flex flex-col justify-between p-3.5 sm:p-4 rounded-2xl bg-[#f8fafc] text-slate-900 border border-slate-300 overflow-hidden relative shadow-2xl">
+                        <!-- Top Nav Pills -->
+                        <div class="shrink-0 flex items-center justify-center pb-2 border-b border-slate-200">
+                            <div class="flex items-center gap-1.5 bg-slate-200/90 p-1 rounded-full">
+                                <button onclick="window.goToSlide(9)" class="px-4 py-1.5 rounded-full text-xs font-semibold uppercase text-slate-600 hover:text-black transition">Deploy</button>
+                                <button onclick="window.goToSlide(10)" class="px-4 py-1.5 rounded-full text-xs font-semibold uppercase text-slate-600 hover:text-black transition">Adapt</button>
+                                <button onclick="window.goToSlide(11)" class="px-4 py-1.5 rounded-full text-xs font-semibold uppercase text-slate-600 hover:text-black transition">Scale</button>
+                                <button onclick="window.goToSlide(12)" class="px-4 py-1.5 rounded-full text-xs font-semibold uppercase bg-black text-white shadow-sm transition">Govern</button>
+                            </div>
+                        </div>
+
+                        <!-- Text Block -->
+                        <div class="shrink-0 py-2">
+                            <span class="text-xs font-mono font-bold text-slate-400">04</span>
+                            <h2 class="font-display font-extrabold text-xl sm:text-2xl text-slate-950 tracking-tight leading-tight mt-0.5">
+                                Govern
+                            </h2>
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-xl mt-1 font-normal">
+                                Keep your AI deployments secure and compliant. Monitor performance, manage access controls, and maintain oversight of all AI interactions. Stay in control while scaling your AI operations.
+                            </p>
+                        </div>
+
+                        <!-- GIF Media Frame Stretched to Fill Vertical Space -->
+                        <div class="flex-1 min-h-0 w-full relative rounded-xl overflow-hidden bg-slate-950 border border-slate-300 shadow-lg flex items-center justify-center">
+                            <img src="GIFs/Govern.gif" alt="Govern AI Deployments Workflow GIF" class="w-full h-full object-contain" loading="lazy" />
+                        </div>
+
+                        <!-- Footer -->
+                        <div class="shrink-0 flex items-center justify-between text-xs text-slate-500 pt-2 border-t border-slate-200">
+                            <span>Step 04 • Security &amp; Compliance</span>
+                            <span class="font-mono text-blue-600 font-bold">Govern Mode</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- =============================================================
+                 TRANSCRIPT DRAWER (TOGGLED OVER RIGHT PANEL VIA BUTTON)
+                 ============================================================= -->
+            <div id="panel-transcript" class="absolute inset-0 bg-[#040816] flex flex-col p-4 z-20 hidden">
+                <div class="shrink-0 flex items-center justify-between pb-3 border-b border-white/10">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-bold text-white">Live Conversation &amp; Telemetry</span>
+                        <span id="message-badge" class="px-2 py-0.5 rounded-full bg-blue-950 text-blue-300 text-[10px] font-mono border border-blue-800">1 msgs</span>
+                    </div>
+                    <button id="btn-close-transcript" onclick="window.toggleTranscript(false)" class="p-1 px-2 rounded-md hover:bg-white/10 text-slate-400 hover:text-white transition text-xs font-mono">
+                        ✕ Close
+                    </button>
+                </div>
+
+                <div id="transcript-feed" class="flex-1 overflow-y-auto space-y-3 py-3 pr-1 text-xs">
+                    <div class="flex flex-col gap-1 items-start">
+                        <span class="text-[10px] font-medium text-blue-400 ml-1">OmniAgent (Specialist)</span>
+                        <div class="px-3.5 py-2 rounded-xl text-xs leading-relaxed max-w-[85%] bg-white/5 border border-white/10 text-gray-200 rounded-tl-sm">
+                            Welcome to OmniAgent by Tatwa Technologies. I can guide you through our omnichannel architecture, speech synthesis, behavioral coaching, or our 4 product workflows: Deploy, Adapt, Scale, and Govern.
+                        </div>
+                    </div>
+                </div>
+
+                <form id="chat-form" class="shrink-0 pt-2 border-t border-white/10 flex items-center gap-2">
+                    <input 
+                        type="text" 
+                        id="chat-input" 
+                        placeholder="Type a query or workflow (e.g. deploy, adapt, scale, govern)..." 
+                        class="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 font-mono"
+                        autocomplete="off"
+                    >
+                    <button type="submit" class="px-3 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium transition active:scale-95">
+                        Send
+                    </button>
+                </form>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- =================================================================
+         SIDE MENU SLIDE-OVER DRAWER
+         ================================================================= -->
+    <div id="side-menu-backdrop" onclick="window.toggleSideMenu(false)" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden transition-opacity"></div>
+
+    <aside id="side-menu-drawer" class="fixed top-0 right-0 bottom-0 w-80 sm:w-96 bg-[#070e24] border-l border-white/10 shadow-2xl z-50 flex flex-col justify-between drawer-closed">
+        <div class="p-4 border-b border-white/10 flex items-center justify-between shrink-0">
+            <div class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg>
+                <h3 class="font-display font-bold text-sm text-white">Menu &amp; Controls</h3>
+            </div>
+            <button onclick="window.toggleSideMenu(false)" class="p-1 px-2 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white text-xs transition">
+                ✕ Close
+            </button>
+        </div>
+
+        <div class="flex-1 overflow-y-auto p-4 space-y-5 text-xs">
+            <div class="bg-white/5 border border-white/10 rounded-xl p-3 space-y-2">
+                <div class="flex items-center justify-between">
+                    <span class="font-semibold text-white">Presentation Auto-Tour</span>
+                    <button id="drawer-btn-tour" onclick="window.autoAdvanceSlides()" class="px-3 py-1 rounded-md bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs transition">
+                        Start Tour ▶
+                    </button>
+                </div>
+                <p class="text-[11px] text-slate-400">Automatically cycles through all 13 screens at 5-second intervals.</p>
+            </div>
+
+            <div class="space-y-2">
+                <span class="font-mono text-[10px] uppercase tracking-wider text-slate-400 font-bold">13-Screen Directory</span>
+                <div id="drawer-slide-list" class="space-y-1"></div>
+            </div>
+
+            <div class="bg-white/5 border border-white/10 rounded-xl p-3 space-y-3">
+                <div class="flex items-center justify-between">
+                    <span class="font-semibold text-white">Video Agent Tool Tester</span>
+                    <span class="text-[10px] font-mono text-blue-400">v2 SDK</span>
+                </div>
+                <div>
+                    <label class="block text-[10px] font-mono text-slate-400 mb-1">Select <code class="text-blue-300">screen_id</code>:</label>
+                    <select id="drawer-tool-select" class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1.5 text-xs text-white font-mono mb-2"></select>
+                    <button onclick="window.dispatchDrawerToolCall()" class="w-full py-1.5 rounded-lg bg-[#1e6bff] hover:bg-blue-500 text-white font-semibold text-xs transition">
+                        Dispatch Tool Call →
+                    </button>
+                </div>
+                <div>
+                    <span class="text-[10px] font-mono text-slate-400 block mb-1">Dispatched Payload:</span>
+                    <pre id="drawer-tool-payload" class="bg-black/80 border border-white/10 rounded-lg p-2 text-[10px] font-mono text-emerald-400 overflow-x-auto max-h-24"></pre>
+                </div>
+            </div>
+
+            <div class="bg-white/5 border border-white/10 rounded-xl p-3 space-y-2">
+                <span class="font-semibold text-white block">Worker Token Endpoint</span>
+                <input 
+                    type="url" 
+                    id="drawer-worker-url" 
+                    class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1.5 text-xs text-white font-mono focus:border-blue-500 focus:outline-none"
+                    placeholder="http://localhost:8787"
+                >
+                <button onclick="window.saveDrawerWorkerSettings()" class="w-full py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-200 font-medium text-xs transition border border-white/10">
+                    Save Endpoint URL
+                </button>
+            </div>
+        </div>
+
+        <div class="p-3 border-t border-white/10 text-center shrink-0">
+            <span class="text-[10px] font-mono text-slate-500">OmniAgent v2.0 • TATWA TECHNOLOGIES</span>
+        </div>
+    </aside>
+
+    <!-- =================================================================
+         OMNIAGENT MASTER CONTROLLER SCRIPT
+         ================================================================= -->
+    <script>
+        const OMNI_SCREENS = [
+            { id: "hero_overview", index: 0, label: "01 Hero", title: "Enterprise AI Voice Agents" },
+            { id: "omnichannel_matrix", index: 1, label: "02 Channels", title: "Omnichannel Touchpoints" },
+            { id: "hitech_symphony", index: 2, label: "03 Symphony", title: "Audio Pipeline Symphony" },
+            { id: "core_ten_features", index: 3, label: "04 Features", title: "10 Enterprise Capabilities" },
+            { id: "features_coaching_sounds", index: 4, label: "05 Coaching", title: "Coaching & Ambient Sounds" },
+            { id: "features_widget_evaluation", index: 5, label: "06 Widget", title: "Widget & QA Evaluation" },
+            { id: "features_analytics_qa", index: 6, label: "07 Analytics", title: "Analytics & Call Connectivity" },
+            { id: "global_presence", index: 7, label: "08 Presence", title: "Global & India Presence" },
+            { id: "transform_cta", index: 8, label: "09 Roadmap", title: "24h–72h Enterprise Roadmap" },
+            { id: "lifecycle_deploy", index: 9, label: "10 Deploy", title: "01 Deploy AI OmniAgents (GIF)" },
+            { id: "lifecycle_adapt", index: 10, label: "11 Adapt", title: "02 Adapt to your business (GIF)" },
+            { id: "lifecycle_scale", index: 11, label: "12 Scale", title: "03 Scale with Confidence (GIF)" },
+            { id: "lifecycle_govern", index: 12, label: "13 Govern", title: "04 Govern AI Deployments (GIF)" }
+        ];
+
+        let currentSlide = 0;
+        const totalSlides = OMNI_SCREENS.length;
+        let autoTimer = null;
+        let isMuted = false;
+
+        const eqContainer = document.getElementById('symphony-eq-bars');
+        if (eqContainer) {
+            const heights = [30, 80, 50, 95, 40, 70, 90, 60, 85, 45, 100, 65, 35, 75, 55];
+            eqContainer.innerHTML = heights.map((h, i) => `
+                <div class="eq-bar" style="height:${h}%; animation-delay:${(i * 0.08).toFixed(2)}s"></div>
+            `).join('');
+        }
+
+        function initDrawerUI() {
+            const drawerList = document.getElementById('drawer-slide-list');
+            const drawerSelect = document.getElementById('drawer-tool-select');
+            const inputUrl = document.getElementById('drawer-worker-url');
+
+            drawerList.innerHTML = OMNI_SCREENS.map(s => `
+                <button
+                    id="drawer-item-${s.index}"
+                    onclick="window.goToSlide(${s.index}); window.toggleSideMenu(false);"
+                    class="w-full px-2.5 py-1.5 rounded-lg border text-left font-mono text-[11px] flex items-center justify-between transition border-white/5 bg-white/5 hover:bg-white/10 text-slate-300"
+                >
+                    <span class="truncate">${s.label}: ${s.title}</span>
+                    <span class="text-[9px] text-blue-400 font-bold ml-1 shrink-0">${s.index < 9 ? 'Slide' : 'GIF'}</span>
+                </button>
+            `).join('');
+
+            drawerSelect.innerHTML = OMNI_SCREENS.map(s => `
+                <option value="${s.id}">${s.label} — ${s.id}</option>
+            `).join('');
+
+            inputUrl.value = localStorage.getItem('omniagent_worker_url') || 'http://localhost:8787';
+        }
+        initDrawerUI();
+
+        window.goToSlide = function(index) {
+            if (index < 0) index = totalSlides - 1;
+            if (index >= totalSlides) index = 0;
+            currentSlide = index;
+
+            for (let i = 0; i < totalSlides; i++) {
+                const slide = document.getElementById(`slide-${i}`);
+                const drawerItem = document.getElementById(`drawer-item-${i}`);
+
+                if (i === currentSlide) {
+                    if (slide) {
+                        slide.classList.remove('inactive');
+                        slide.classList.add('active');
+                    }
+                    if (drawerItem) {
+                        drawerItem.className = 'w-full px-2.5 py-1.5 rounded-lg border text-left font-mono text-[11px] flex items-center justify-between transition border-blue-500 bg-blue-600/20 text-white font-bold';
+                    }
+                } else {
+                    if (slide) {
+                        slide.classList.remove('active');
+                        slide.classList.add('inactive');
+                    }
+                    if (drawerItem) {
+                        drawerItem.className = 'w-full px-2.5 py-1.5 rounded-lg border text-left font-mono text-[11px] flex items-center justify-between transition border-white/5 bg-white/5 hover:bg-white/10 text-slate-300';
+                    }
+                }
+            }
+
+            const pillCounter = document.getElementById('slide-pill-counter');
+            const headerTitle = document.getElementById('slide-header-title');
+            if (pillCounter) {
+                const num = String(currentSlide + 1).padStart(2, '0');
+                pillCounter.textContent = `${num} / 13`;
+            }
+            if (headerTitle) {
+                headerTitle.textContent = OMNI_SCREENS[currentSlide].title;
+            }
+
+            const drawerSelect = document.getElementById('drawer-tool-select');
+            if (drawerSelect) {
+                drawerSelect.value = OMNI_SCREENS[currentSlide].id;
+            }
+        };
+
+        document.getElementById('btn-prev-slide').addEventListener('click', () => window.goToSlide(currentSlide - 1));
+        document.getElementById('btn-next-slide').addEventListener('click', () => window.goToSlide(currentSlide + 1));
+
+        document.addEventListener('keydown', (e) => {
+            if (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'SELECT' || document.activeElement.tagName === 'TEXTAREA')) {
+                return;
+            }
+            if (e.key === 'ArrowRight') {
+                window.goToSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft') {
+                window.goToSlide(currentSlide - 1);
+            } else if (e.key >= '1' && e.key <= '9') {
+                window.goToSlide(parseInt(e.key, 10) - 1);
+            } else if (e.key === 'Escape') {
+                window.toggleSideMenu(false);
+            }
+        });
+
+        window.autoAdvanceSlides = function() {
+            const btn = document.getElementById('drawer-btn-tour');
+            if (autoTimer) {
+                clearInterval(autoTimer);
+                autoTimer = null;
+                if (btn) {
+                    btn.textContent = 'Start Tour ▶';
+                    btn.className = 'px-3 py-1 rounded-md bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs transition';
+                }
+            } else {
+                autoTimer = setInterval(() => {
+                    window.goToSlide(currentSlide + 1);
+                }, 5000);
+                if (btn) {
+                    btn.textContent = 'Pause ⏸';
+                    btn.className = 'px-3 py-1 rounded-md bg-amber-600 hover:bg-amber-500 text-white font-medium text-xs transition';
+                }
+            }
+        };
+
+        window.toggleSideMenu = function(show) {
+            const drawer = document.getElementById('side-menu-drawer');
+            const backdrop = document.getElementById('side-menu-backdrop');
+            const isOpen = drawer.classList.contains('drawer-open');
+            const target = (show !== undefined) ? show : !isOpen;
+
+            if (target) {
+                backdrop.classList.remove('hidden');
+                drawer.classList.remove('drawer-closed');
+                drawer.classList.add('drawer-open');
+            } else {
+                backdrop.classList.add('hidden');
+                drawer.classList.remove('drawer-open');
+                drawer.classList.add('drawer-closed');
+            }
+        };
+
+        window.dispatchDrawerToolCall = function() {
+            const selectEl = document.getElementById('drawer-tool-select');
+            const chosenId = selectEl.value;
+            const payload = window.handleOmniAgentToolCall(chosenId, "drawer_simulator");
+
+            const pre = document.getElementById('drawer-tool-payload');
+            if (pre) {
+                pre.textContent = JSON.stringify(payload, null, 2);
+            }
+        };
+
+        window.saveDrawerWorkerSettings = function() {
+            const inputVal = document.getElementById('drawer-worker-url').value.trim();
+            if (inputVal) {
+                localStorage.setItem('omniagent_worker_url', inputVal.replace(/\/+$/, ''));
+                alert('Worker endpoint saved: ' + inputVal);
+            }
+        };
+
+        const panelTranscript = document.getElementById('panel-transcript');
+        const panelShowcase = document.getElementById('panel-elements-showcase');
+        const btnToggleTranscript = document.getElementById('btn-toggle-transcript');
+        const labelTranscript = document.getElementById('label-transcript');
+        const transcriptFeed = document.getElementById('transcript-feed');
+        const chatForm = document.getElementById('chat-form');
+        const chatInput = document.getElementById('chat-input');
+        let messageCount = 1;
+
+        window.toggleTranscript = function(show) {
+            const shouldOpen = (show !== undefined) ? show : panelTranscript.classList.contains('hidden');
+            if (shouldOpen) {
+                panelShowcase.classList.add('hidden');
+                panelTranscript.classList.remove('hidden');
+                labelTranscript.textContent = 'Close';
+                btnToggleTranscript.classList.add('bg-blue-600', 'text-white');
+                btnToggleTranscript.classList.remove('bg-blue-600/20', 'text-blue-400');
+                transcriptFeed.scrollTop = transcriptFeed.scrollHeight;
+            } else {
+                panelTranscript.classList.add('hidden');
+                panelShowcase.classList.remove('hidden');
+                labelTranscript.textContent = 'Transcript';
+                btnToggleTranscript.classList.remove('bg-blue-600', 'text-white');
+                btnToggleTranscript.classList.add('bg-blue-600/20', 'text-blue-400');
+            }
+        };
+
+        function addMessage(role, text) {
+            const isUser = role === 'user';
+            messageCount++;
+            document.getElementById('message-badge').textContent = `${messageCount} msgs`;
+
+            const wrapper = document.createElement('div');
+            wrapper.className = `flex flex-col gap-1 ${isUser ? 'items-end' : 'items-start'}`;
+
+            const sender = document.createElement('span');
+            sender.className = `text-[10px] font-medium ml-1 ${isUser ? 'text-purple-400 mr-1' : 'text-blue-400'}`;
+            sender.textContent = isUser ? 'You' : 'OmniAgent';
+
+            const bubble = document.createElement('div');
+            bubble.className = `px-3.5 py-2 rounded-xl text-xs leading-relaxed max-w-[85%] ${
+                isUser 
+                    ? 'bg-blue-600 text-white rounded-tr-sm' 
+                    : 'bg-white/5 border border-white/10 text-gray-200 rounded-tl-sm'
+            }`;
+            bubble.textContent = text;
+
+            wrapper.appendChild(sender);
+            wrapper.appendChild(bubble);
+            transcriptFeed.appendChild(wrapper);
+            transcriptFeed.scrollTop = transcriptFeed.scrollHeight;
+        }
+
+        function addSystemNotice(text) {
+            const notice = document.createElement('div');
+            notice.className = 'flex justify-center my-1.5';
+            notice.innerHTML = `<span class="px-2.5 py-0.5 rounded-full bg-blue-950/80 border border-blue-800/60 text-[10px] font-mono text-blue-300">⚡ ${text}</span>`;
+            transcriptFeed.appendChild(notice);
+            transcriptFeed.scrollTop = transcriptFeed.scrollHeight;
+        }
+
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const text = chatInput.value.trim();
+            if (!text) return;
+            addMessage('user', text);
+            chatInput.value = '';
+
+            const lower = text.toLowerCase();
+            const topicMap = {
+                "hero": 0, "overview": 0, "intro": 0,
+                "channel": 1, "email": 1, "voice": 1, "chat": 1, "whatsapp": 1,
+                "symphony": 2, "architecture": 2, "stt": 2, "tts": 2, "latency": 2,
+                "feature": 3, "transcript": 3, "audit": 3, "crm": 3, "sap": 3,
+                "coach": 4, "sound": 4, "ambien": 4, "typing": 4, "office": 4,
+                "widget": 5, "qa": 5, "eval": 5, "rating": 5, "score": 5,
+                "analytics": 6, "connectivity": 6, "drop": 6, "success": 6,
+                "presence": 7, "map": 7, "india": 7, "bhubaneswar": 7, "dubai": 7,
+                "deploy": 9, "drag": 9, "deloy": 9,
+                "adapt": 10, "behavior": 10, "setup": 10,
+                "scale": 11, "concurrency": 11, "million": 11,
+                "govern": 12, "compliance": 12, "access": 12, "security": 12,
+                "adopt": 8, "pilot": 8, "72": 8, "24": 8, "roadmap": 8
+            };
+
+            for (const [key, slideIdx] of Object.entries(topicMap)) {
+                if (lower.includes(key)) {
+                    window.goToSlide(slideIdx);
+                    addSystemNotice(`Visual context shifted to: ${OMNI_SCREENS[slideIdx].title}`);
+                    break;
+                }
+            }
+        });
+
+        const SCREEN_ID_MAP = {
+            "hero_overview": 0,
+            "omnichannel_matrix": 1,
+            "hitech_symphony": 2,
+            "core_ten_features": 3,
+            "features_coaching_sounds": 4,
+            "features_widget_evaluation": 5,
+            "features_analytics_qa": 6,
+            "global_presence": 7,
+            "transform_cta": 8,
+            "lifecycle_deploy": 9,
+            "deploy": 9,
+            "lifecycle_adapt": 10,
+            "adapt": 10,
+            "lifecycle_scale": 11,
+            "scale": 11,
+            "lifecycle_govern": 12,
+            "govern": 12
+        };
+
+        window.handleOmniAgentToolCall = function(screenId, source = "tool_call") {
+            let targetIdx = SCREEN_ID_MAP[screenId];
+            if (targetIdx === undefined) {
+                const lower = String(screenId).toLowerCase();
+                for (const [k, v] of Object.entries(SCREEN_ID_MAP)) {
+                    if (lower.includes(k) || k.includes(lower)) {
+                        targetIdx = v;
+                        break;
+                    }
+                }
+            }
+            if (targetIdx === undefined) targetIdx = 0;
+
+            window.goToSlide(targetIdx);
+            addSystemNotice(`[${source}] screen_id: ${screenId} -> Slide ${targetIdx + 1}`);
+
+            return {
+                tool_name: "show_omniagent_screen",
+                screen_id: screenId,
+                slide_index: targetIdx,
+                timestamp: new Date().toISOString()
+            };
+        };
+
+        function extractScreenIdFromPayload(payload) {
+            if (!payload) return null;
+            return payload.screen_id 
+                || payload.screen
+                || payload.arguments?.screen_id 
+                || payload.arguments?.screen
+                || payload.args?.screen_id 
+                || payload.args?.screen
+                || payload.parameters?.screen_id
+                || payload.payload?.arguments?.screen_id
+                || payload.topic;
+        }
+
+        function onAnamToolCallEvent(e, sourceName) {
+            const detail = e.detail || e.data || {};
+            const toolName = detail.toolName || detail.name || detail.tool || (e.data && e.data.type);
+            
+            // Accept either explicit show_omniagent_screen or generic tool call with screen_id parameter
+            if (!toolName || toolName === 'show_omniagent_screen' || toolName === 'omniagent:tool_call') {
+                const screenId = extractScreenIdFromPayload(detail);
+                if (screenId) {
+                    window.handleOmniAgentToolCall(screenId, sourceName || "anam_agent_event");
+                }
+            }
+        }
+
+        const anamEventTypes = [
+            'anam-agent:tool-call',
+            'anam-agent:tool-call-started',
+            'anam:tool-call',
+            'anam:tool-call-started',
+            'tool-call',
+            'tool-call-started',
+            'toolCallStarted',
+            'omniagent:tool_call'
+        ];
+
+        const agentElement = document.getElementById('omniagent-agent');
+
+        anamEventTypes.forEach(evt => {
+            window.addEventListener(evt, (e) => onAnamToolCallEvent(e, evt));
+            document.addEventListener(evt, (e) => onAnamToolCallEvent(e, `doc:${evt}`));
+            if (agentElement) {
+                agentElement.addEventListener(evt, (e) => onAnamToolCallEvent(e, `agentEl:${evt}`));
+            }
+        });
+
+        window.addEventListener('message', (e) => {
+            if (e.data) {
+                if (e.data.type === 'show_omniagent_screen' || e.data.tool === 'show_omniagent_screen' || e.data.toolName === 'show_omniagent_screen') {
+                    const screenId = extractScreenIdFromPayload(e.data);
+                    if (screenId) window.handleOmniAgentToolCall(screenId, "postMessage");
+                }
+            }
+        });
+
+        window.toggleMicMute = function() {
+            isMuted = !isMuted;
+            const iconOn = document.getElementById('icon-mic-on');
+            const iconOff = document.getElementById('icon-mic-off');
+            const label = document.getElementById('label-mute');
+            const btn = document.getElementById('btn-mute');
+
+            if (isMuted) {
+                iconOn.classList.add('hidden');
+                iconOff.classList.remove('hidden');
+                label.textContent = 'Unmute';
+                btn.classList.add('text-red-400');
+            } else {
+                iconOff.classList.add('hidden');
+                iconOn.classList.remove('hidden');
+                label.textContent = 'Mute';
+                btn.classList.remove('text-red-400');
+            }
+        };
+
+        async function attachWorkerToken() {
+            try {
+                const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+                const defaultWorkerUrl = (window.location.protocol.startsWith('http') && !isLocal)
+                    ? window.location.origin
+                    : "http://localhost:8787";
+                const workerUrl = localStorage.getItem('omniagent_worker_url') || defaultWorkerUrl;
+
+                const res = await fetch(`${workerUrl}/api/session-token`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    const agentEl = document.getElementById('omniagent-agent');
+                    if (data.sessionToken && agentEl) {
+                        agentEl.setAttribute('session-token', data.sessionToken);
+                        agentEl.classList.remove('hidden');
+                        const standby = document.getElementById('video-agent-standby');
+                        if (standby) standby.classList.add('hidden');
+                        const statusBadge = document.getElementById('status-badge-text');
+                        if (statusBadge) statusBadge.textContent = 'Agent Connected';
+                        addSystemNotice('Connected to Anam Video Agent with active session token');
+                    }
+                }
+            } catch (err) {}
+        }
+        attachWorkerToken();
+
+        window.OMNIAGENT = {
+            goToSlide: window.goToSlide,
+            handleToolCall: window.handleOmniAgentToolCall,
+            toggleSideMenu: window.toggleSideMenu,
+            screens: OMNI_SCREENS
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+name = "omniagent-v2-showcase"
+main = "worker.js"
+compatibility_date = "2024-04-01"
+
+[assets]
+directory = "../"
+binding = "ASSETS"
+
+# Environment variables for Anam Video Agent session token exchange and tool management
+[vars]
+# You can set either ANAM_API_KEY or VIDEO_AGENT_API_KEY
+ANAM_API_KEY = ""
+ANAM_PERSONA_ID = ""
+# Fallback alias variables:
+VIDEO_AGENT_API_KEY = ""
+VIDEO_AGENT_PERSONA_ID = ""

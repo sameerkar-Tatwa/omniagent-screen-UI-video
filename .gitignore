@@ -1,0 +1,19 @@
+# Environment variables & secrets (NEVER COMMIT)
+.env
+.env.*
+.dev.vars
+*.secret
+*.token
+*.pem
+*.key
+
+# Dependencies & Build Cache
+node_modules/
+.wrangler/
+backend/.wrangler/
+
+# Editor & OS files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
