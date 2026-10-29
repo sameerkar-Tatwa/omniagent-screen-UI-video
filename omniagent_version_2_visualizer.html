@@ -211,9 +211,10 @@
                 <video id="omniagent-video-element" class="absolute inset-0 w-full h-full object-cover hidden z-10" autoplay playsinline></video>
                 <audio id="omniagent-audio-element" class="hidden" autoplay></audio>
 
-                <anam-agent id="omniagent-agent" api-base-url="https://lab.anam.ai" layout="inline" class="hidden"></anam-agent>
+                <anam-agent id="omniagent-agent" agent-id="25906ccd-29e6-4be6-8e3b-555ed80764ac" api-base-url="https://lab.anam.ai" class="w-full h-full z-10"></anam-agent>
+                <script src="https://unpkg.com/@anam-ai/agent-widget" async></script>
 
-                <div id="video-agent-standby" class="flex flex-col items-center justify-center text-center p-6 z-10 select-none max-w-sm">
+                <div id="video-agent-standby" class="hidden flex-col items-center justify-center text-center p-6 z-0 select-none max-w-sm">
                     <div class="relative w-28 h-28 sm:w-36 sm:h-36 flex items-center justify-center mb-4">
                         <div class="absolute inset-0 rounded-full border border-blue-500/40 agent-ring"></div>
                         <div class="absolute inset-2 rounded-full border border-blue-400/20 agent-ring" style="animation-delay: 1.5s;"></div>

@@ -10,7 +10,7 @@ binding = "ASSETS"
 [vars]
 # You can set either ANAM_API_KEY or VIDEO_AGENT_API_KEY
 ANAM_API_KEY = ""
-ANAM_PERSONA_ID = ""
+ANAM_PERSONA_ID = "25906ccd-29e6-4be6-8e3b-555ed80764ac"
 # Fallback alias variables:
 VIDEO_AGENT_API_KEY = ""
-VIDEO_AGENT_PERSONA_ID = ""
+VIDEO_AGENT_PERSONA_ID = "25906ccd-29e6-4be6-8e3b-555ed80764ac"
