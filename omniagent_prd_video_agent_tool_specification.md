@@ -23,7 +23,7 @@ All 13 screens are implemented as responsive, non-scrolling viewport slides in t
 | **01** | `hero_overview` | `AI First Omni Agent-01.png` | 10-petal OmniAgent logo lockup, *"Build Enterprise Grade AI Voice Agents for every customer conversation"*, 3 value chips, multi-layered blue/white sine-wave ribbon, `TATWA \| 2.0` badge. |
 | **02** | `omnichannel_matrix` | `AI First Omni Agent-02.png` | *"AI-First OmniAgents across Channels"*, royal-blue accent bars, 2-column hand-drawn arrow list (`Emails`, `Voice Calls`, `Web Chat`, `Video Calls`, `Messaging Apps`). |
 | **03** | `hitech_symphony` | `AI First Omni Agent-03.png` | *"HiTech Symphony for OmniAgents"*, 4-column architecture (`Speech to Text`, `NLU + LLM`, `Text to Speech`, `Integrations`), animated blue realtime waveform equalizer, `< 450ms` latency tag. |
-| **04** | `core_ten_features` | `AI First Omni Agent-06.png` | *"OmniAgent : Features"*, numbered 1–10 capability grid (100% transcripts, audits, 17 languages, modulation, SAP/CRM), 23+ years operational footnote. |
+| **04** | `core_ten_features` | `AI First Omni Agent-06.png` | *"OmniAgent : Features"*, numbered 1–10 capability grid (100% transcripts, call audits, 70+ languages, modulation, SAP/CRM), 23+ years operational footnote. |
 | **05** | `features_coaching_sounds` | `AI First Omni Agent-10.png` | Lavender-framed `New Coaching Scenario` card + `Background Sounds` configuration card (`Office / Cafe / Typing / Call Center`). |
 | **06** | `features_widget_evaluation` | `AI First Omni Agent-11.png` | Lavender-framed `Customizable Support Widget` card with purple mic icon + `Evaluation Results` grading table (9.1/10). |
 | **07** | `features_analytics_qa` | `AI First Omni Agent-12.png` | `Call Connectivity by Agent` 12-bar chart (98.4%) + `AI Analyst & QA` 86% green donut chart and metric grid. |
@@ -122,7 +122,7 @@ Whenever you introduce a topic, answer a customer question, or demonstrate capab
 - Welcome / Overview of OmniAgent -> `hero_overview`
 - Communication Channels (Email, Web Chat, Messaging Apps, Voice Calls, Video Calls) -> `omnichannel_matrix`
 - Technical Architecture (Indian-language Speech to Text, NLU + LLM, Text to Speech, 100+ Integrations) -> `hitech_symphony`
-- Core 10 Features (100% Call Transcripts, 5% Call Audits, 17 languages, CRM & SAP, IVRS) -> `core_ten_features`
+- Core 10 Features (100% Call Transcripts, Call Audits, 70+ languages, CRM & SAP, IVRS) -> `core_ten_features`
 - Behavioral Coaching or Ambient Background Sounds (Office, Cafe, Typing, Call Center) -> `features_coaching_sounds`
 - Website Support Widget or Agent Evaluation Framework -> `features_widget_evaluation`
 - Analytics Dashboards, Call Connectivity, or AI Analyst QA (86% success rate, 96.8% compliance) -> `features_analytics_qa`

@@ -183,7 +183,7 @@ You are situated on the **left side of the user's screen** as a live interactive
 | **01** | `hero_overview` | Hero Architecture & Mission | **Opening & Welcome:** During Step 1 greeting, welcoming user to the event, and introducing OmniAgent from Tatwa Technologies. |
 | **02** | `omnichannel_matrix` | Omnichannel Touchpoints | **Communication Channels:** During Step 3 when mentioning Voice, WhatsApp, Web Chat, Email, and Video Calls. |
 | **03** | `hitech_symphony` | HiTech Symphony Engine | **Architecture & Technology:** When explaining Speech-to-Text, NLU+LLM, Neural TTS, Indian languages pipeline, or `<450ms` latency. |
-| **04** | `core_ten_features` | 10 Core Enterprise Capabilities | **Features & Integrations:** When asked about 100% call transcripts, 5% audits, CRM & SAP integration, sentiment detection, or IVRS handoff. |
+| **04** | `core_ten_features` | 10 Core Enterprise Capabilities | **Features & Integrations:** When asked about 100% call transcripts, call audits, 70+ languages, CRM & SAP integration, sentiment detection, or IVRS handoff. |
 | **05** | `features_coaching_sounds` | Coaching & Ambient Acoustic Sounds | **Realism & Soundscapes:** When asked about sounding human, background office ambience, typing sounds, cafe noise, or behavioral de-escalation coaching. |
 | **06** | `features_widget_evaluation` | Support Widget & QA Evaluation | **Website Embed & QA Grading:** When demonstrating the embeddable website voice widget or explaining automated QA evaluation (9.1/10 rating). |
 | **07** | `features_analytics_qa` | Analytics & Call Connectivity | **Dashboards & Reporting:** When asked about success rates, call connectivity (98.4%), AI QA analyst score (86%), drop rate (2.4%), or compliance. |

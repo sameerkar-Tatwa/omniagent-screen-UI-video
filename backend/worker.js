@@ -42,7 +42,7 @@ const OMNI_SCREENS_METADATA = [
   { index: 0, id: "hero_overview", label: "01 Hero", title: "OmniAgent Architecture & Mission", trigger: "Greetings, introduction, welcome, company overview" },
   { index: 1, id: "omnichannel_matrix", label: "02 Channels", title: "AI-First Channels (Voice, Email, Chat)", trigger: "Voice, Email, Chat, WhatsApp, Video communications" },
   { index: 2, id: "hitech_symphony", label: "03 Symphony", title: "HiTech Symphony (<450ms Latency)", trigger: "STT, NLU+LLM, Neural TTS, Indian languages, <450ms latency" },
-  { index: 3, id: "core_ten_features", label: "04 Features", title: "10 Enterprise Core Features", trigger: "100% call transcripts, 5% audits, CRM & SAP, IVRS handoff" },
+  { index: 3, id: "core_ten_features", label: "04 Features", title: "10 Enterprise Core Features", trigger: "100% call transcripts, call audits, 70+ languages, CRM & SAP, IVRS handoff" },
   { index: 4, id: "features_coaching_sounds", label: "05 Coaching", title: "Coaching & Ambient Sounds", trigger: "Behavioral coaching, de-escalation, office/cafe/typing sound" },
   { index: 5, id: "features_widget_evaluation", label: "06 Widget", title: "Widget & QA Evaluation", trigger: "Support widget embed, QA evaluation grading (9.1/10)" },
   { index: 6, id: "features_analytics_qa", label: "07 Analytics", title: "Analytics & Call Connectivity", trigger: "Real-time analytics, call connectivity (98.4%), QA donut (86%)" },
